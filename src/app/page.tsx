@@ -24,13 +24,13 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-[#00274D] hover:bg-[#003366] transition-colors shadow-lg hover:shadow-xl"
+              className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-[#FF8C00] hover:bg-[#FFA500] transition-all duration-300 shadow-lg hover:shadow-xl"
             >
               Request a Quote
             </Link>
             <Link
               href="/services"
-              className="inline-flex items-center justify-center px-8 py-3 border-2 border-[#00274D] text-base font-medium rounded-md text-[#00274D] bg-white hover:bg-[#00274D] hover:text-white transition-colors shadow-lg hover:shadow-xl"
+              className="inline-flex items-center justify-center px-8 py-3 border-2 border-[#FF8C00] text-base font-medium rounded-md text-white bg-transparent hover:bg-[#FF8C00] transition-all duration-300 shadow-lg hover:shadow-xl"
             >
               View Our Services
             </Link>
@@ -62,7 +62,7 @@ export default function Home() {
           </p>
           <Link
             href="/contact"
-            className="inline-flex items-center justify-center px-8 py-3 border-2 border-[#00274D] text-base font-medium rounded-md text-[#00274D] bg-white hover:bg-[#00274D] hover:text-white transition-colors shadow-lg hover:shadow-xl"
+            className="inline-flex items-center justify-center px-8 py-3 border-2 border-[#FF8C00] text-base font-medium rounded-md text-white bg-transparent hover:bg-[#FF8C00] transition-all duration-300 shadow-lg hover:shadow-xl"
           >
             Get Started
           </Link>

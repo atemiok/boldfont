@@ -25,6 +25,37 @@ export default function Navigation() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // Handle body scroll lock when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [mobileMenuOpen])
+
+  // Handle escape key press
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setMobileMenuOpen(false)
+      }
+    }
+    window.addEventListener('keydown', handleEscape)
+    return () => window.removeEventListener('keydown', handleEscape)
+  }, [])
+
+  const handleMenuToggle = () => {
+    setMobileMenuOpen(prev => !prev)
+  }
+
+  const handleMenuClose = () => {
+    setMobileMenuOpen(false)
+  }
+
   return (
     <header className={`fixed w-full transition-all duration-300 ${
       scrolled 
@@ -42,10 +73,16 @@ export default function Navigation() {
           <button
             type="button"
             className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-white hover:bg-white/10 transition-colors"
-            onClick={() => setMobileMenuOpen(true)}
+            onClick={handleMenuToggle}
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-menu"
           >
-            <span className="sr-only">Open main menu</span>
-            <Bars3Icon className="h-6 w-6" aria-hidden="true" />
+            <span className="sr-only">{mobileMenuOpen ? 'Close menu' : 'Open menu'}</span>
+            {mobileMenuOpen ? (
+              <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+            ) : (
+              <Bars3Icon className="h-6 w-6" aria-hidden="true" />
+            )}
           </button>
         </div>
         <div className="hidden lg:flex lg:gap-x-12">
@@ -62,7 +99,7 @@ export default function Navigation() {
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <Link
             href="/contact"
-            className="rounded-md bg-white/10 backdrop-blur-sm px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-white/20 transition-colors border border-white/20"
+            className="rounded-md bg-[#FF8C00] px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#FFA500] transition-all duration-300 border border-white/20"
           >
             Get in Touch
           </Link>
@@ -71,16 +108,19 @@ export default function Navigation() {
       
       {/* Mobile menu */}
       <div 
+        id="mobile-menu"
         className={`lg:hidden fixed inset-0 z-50 transition-opacity duration-300 ${
           mobileMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}
+        role="dialog"
+        aria-modal="true"
       >
         <div 
           className={`fixed inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-300 ${
             mobileMenuOpen ? 'opacity-100' : 'opacity-0'
           }`} 
           aria-hidden="true"
-          onClick={() => setMobileMenuOpen(false)}
+          onClick={handleMenuClose}
         />
         <div 
           className={`fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-gradient-to-b from-[#00274D] to-[#003366] px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-white/10 transform transition-transform duration-300 ${
@@ -88,14 +128,14 @@ export default function Navigation() {
           }`}
         >
           <div className="flex items-center justify-between">
-            <Link href="/" className="-m-1.5 p-1.5 flex items-center gap-2">
+            <Link href="/" className="-m-1.5 p-1.5 flex items-center gap-2" onClick={handleMenuClose}>
               <img src="/logo.png" alt="Bold Font Logo" className="h-12 w-12 sm:h-16 sm:w-16" />
               <span className="font-heading text-xl sm:text-2xl font-bold text-white">Bold Font</span>
             </Link>
             <button
               type="button"
               className="-m-2.5 rounded-md p-2.5 text-white hover:bg-white/10 transition-colors"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={handleMenuClose}
             >
               <span className="sr-only">Close menu</span>
               <XMarkIcon className="h-6 w-6" aria-hidden="true" />
@@ -109,7 +149,7 @@ export default function Navigation() {
                     key={item.name}
                     href={item.href}
                     className="-mx-3 block rounded-lg px-3 py-3 text-base font-semibold leading-7 text-white/90 hover:text-white hover:bg-white/5 transition-colors active:bg-white/10"
-                    onClick={() => setMobileMenuOpen(false)}
+                    onClick={handleMenuClose}
                   >
                     {item.name}
                   </Link>
@@ -118,8 +158,8 @@ export default function Navigation() {
               <div className="py-6">
                 <Link
                   href="/contact"
-                  className="-mx-3 block rounded-lg px-3 py-3 text-base font-semibold leading-7 text-white bg-white/10 hover:bg-white/20 transition-colors border border-white/20 active:bg-white/30"
-                  onClick={() => setMobileMenuOpen(false)}
+                  className="-mx-3 block rounded-lg px-3 py-3 text-base font-semibold leading-7 text-white bg-[#FF8C00] hover:bg-[#FFA500] transition-all duration-300 border border-white/20 active:bg-[#FF7C00]"
+                  onClick={handleMenuClose}
                 >
                   Get in Touch
                 </Link>
