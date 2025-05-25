@@ -5,6 +5,9 @@ const nextConfig = {
   images: {
     domains: ['images.unsplash.com'],
   },
+  experimental: {
+    optimizeFonts: true,
+  },
   // Enable static optimization
   output: 'standalone',
 }
